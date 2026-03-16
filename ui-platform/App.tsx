@@ -75,19 +75,43 @@ const LandingPage: React.FC = () => {
   const capabilities = [
     {
       icon: "🤖",
-      title: "Intelligent Workflows",
-      body: "AI-orchestrated business processes that adapt in real-time. Automate payroll, CRM, compliance, and more with a single prompt.",
+      title: "AI-Powered Automation",
+      body: "Build payroll, CRM, invoicing, HR, and compliance apps with a single prompt. AI handles the logic — you focus on your business.",
+    },
+    {
+      icon: "🌍",
+      title: "14+ Countries Supported",
+      body: "Built-in payroll rules for Malaysia, Singapore, India, UK, USA, Australia, Canada, Germany, Philippines, Indonesia, Sri Lanka, Nepal, UAE, and Japan.",
     },
     {
       icon: "🏗️",
-      title: "Multi-Tenant Apps",
-      body: "Spin up fully isolated environments for every client in under 60 seconds. Per-tenant databases, subdomains, and access control.",
+      title: "Multi-Tenant Isolation",
+      body: "Each organization gets fully isolated data, apps, and access control. Spin up a new tenant in under 60 seconds.",
     },
     {
       icon: "📊",
       title: "Real-Time Analytics",
-      body: "Live observability dashboards, execution logs, and LLM token metrics across every app and workflow in your platform.",
+      body: "Live dashboards, execution logs, LLM token metrics, and billing — all in one control plane.",
     },
+  ];
+
+  const industries = [
+    { icon: "💰", name: "Payroll & Finance", desc: "EPF, CPF, PAYE, FICA — auto-calculated per country" },
+    { icon: "🏥", name: "Healthcare", desc: "Patient records, scheduling, compliance tracking" },
+    { icon: "🎓", name: "Education", desc: "Student management, grading, fee collection" },
+    { icon: "🔧", name: "Field Services", desc: "Job scheduling, dispatch, client portals" },
+    { icon: "🤝", name: "Recruitment", desc: "ATS, visa tracking, candidate scoring" },
+    { icon: "📦", name: "Logistics", desc: "Inventory, shipping, multi-warehouse ops" },
+  ];
+
+  const countries = [
+    { flag: "🇲🇾", name: "Malaysia" }, { flag: "🇸🇬", name: "Singapore" },
+    { flag: "🇮🇳", name: "India" }, { flag: "🇵🇭", name: "Philippines" },
+    { flag: "🇦🇺", name: "Australia" }, { flag: "🇱🇰", name: "Sri Lanka" },
+    { flag: "🇳🇵", name: "Nepal" }, { flag: "🇨🇦", name: "Canada" },
+    { flag: "🇩🇪", name: "Germany" }, { flag: "🇬🇧", name: "UK" },
+    { flag: "🇺🇸", name: "USA" }, { flag: "🇮🇩", name: "Indonesia" },
+    { flag: "🇦🇪", name: "UAE" }, { flag: "🇯🇵", name: "Japan" },
   ];
 
   const steps = [
@@ -118,7 +142,7 @@ const LandingPage: React.FC = () => {
             <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">for Your Business</span>
           </h1>
           <p className="text-lg text-white/70 max-w-2xl mx-auto mb-10">
-            Describe any business process in plain English. Emergentic AI builds, deploys, and operates the full application stack — payroll, CRM, invoicing, HR, and more.
+            Describe any business process in plain English. Emergentic AI builds, deploys, and operates the full application — with country-specific payroll, tax rules, and compliance for 14+ countries built in.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button onClick={() => navigate("/login")} className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-500 text-white font-semibold shadow-lg hover:translate-y-[-1px] transition">
@@ -130,9 +154,10 @@ const LandingPage: React.FC = () => {
           </div>
 
           {/* Stats bar */}
-          <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto mt-16">
+          <div className="grid grid-cols-4 gap-4 max-w-xl mx-auto mt-16">
             {[
               { label: "Deployment time", value: "< 60s" },
+              { label: "Countries", value: "14+" },
               { label: "Industry templates", value: "7+" },
               { label: "Data isolation", value: "Per-tenant" },
             ].map((s) => (
@@ -151,12 +176,52 @@ const LandingPage: React.FC = () => {
           <p className="text-xs font-semibold uppercase tracking-widest text-cyan-400 mb-3">Platform capabilities</p>
           <h2 className="text-2xl sm:text-3xl font-bold">Everything your business needs</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {capabilities.map((c) => (
             <div key={c.title} className="rounded-2xl border border-white/10 bg-white/5 p-6 hover:bg-white/8 transition">
               <div className="text-3xl mb-4">{c.icon}</div>
               <h3 className="text-base font-semibold mb-2">{c.title}</h3>
               <p className="text-sm text-white/60 leading-relaxed">{c.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Industries */}
+      <section className="border-t border-white/10 bg-slate-900/30">
+        <div className="max-w-5xl mx-auto px-6 py-16">
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold uppercase tracking-widest text-cyan-400 mb-3">Multi-industry</p>
+            <h2 className="text-2xl sm:text-3xl font-bold">Built for every industry</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {industries.map((ind) => (
+              <div key={ind.name} className="rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/8 transition">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">{ind.icon}</span>
+                  <h3 className="text-sm font-semibold">{ind.name}</h3>
+                </div>
+                <p className="text-xs text-white/50">{ind.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Countries */}
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <div className="text-center mb-10">
+          <p className="text-xs font-semibold uppercase tracking-widest text-cyan-400 mb-3">Global compliance</p>
+          <h2 className="text-2xl sm:text-3xl font-bold">Payroll & compliance for 14+ countries</h2>
+          <p className="text-sm text-white/50 mt-3 max-w-2xl mx-auto">
+            Country-specific tax rules, social contributions, and labor laws built into every payroll app. Automatically applies EPF, CPF, PAYE, FICA, and more.
+          </p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-3">
+          {countries.map((c) => (
+            <div key={c.name} className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm">
+              <span>{c.flag}</span>
+              <span className="text-white/80">{c.name}</span>
             </div>
           ))}
         </div>

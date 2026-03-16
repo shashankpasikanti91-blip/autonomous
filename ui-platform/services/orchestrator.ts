@@ -71,6 +71,29 @@ export interface OrchestrationResult {
   };
 }
 
+// ─── Multi-Country Payroll & Compliance Rules ─────────────────────────────────
+
+const COUNTRY_RULES = `
+SUPPORTED COUNTRY PAYROLL & COMPLIANCE RULES:
+- Malaysia (MY): EPF 11% employee / 13% employer, SOCSO, EIS, PCB income tax, min wage MYR 1,500/mo
+- Singapore (SG): CPF 20% employee / 17% employer, SDL, SHG, min wage SGD 1,600/mo (residents)
+- India (IN): PF 12%/12%, ESI 0.75%/3.25%, Professional Tax (state), TDS, min wage varies by state
+- Philippines (PH): SSS 4.5% / 8.5%, PhilHealth 2.5%/2.5%, Pag-IBIG 2%/2%, 13th month pay mandatory
+- Australia (AU): Super 11% employer, PAYG withholding, Medicare 2%, Fair Work Act
+- Sri Lanka (LK): EPF 8% / 12%, ETF 3% employer, PAYE tax
+- Nepal (NP): CIT 10% / 20%, SSF, income tax slabs
+- Canada (CA): CPP 5.95%, EI 1.66% / 2.32%, federal + provincial tax
+- Germany (DE): Social security ~20%, Lohnsteuer, Kirchensteuer optional, min wage EUR 12.41/hr
+- UK (GB): NI 8% / 13.8%, PAYE, pension auto-enrolment 5%/3%, min wage GBP 11.44/hr
+- USA (US): FICA 6.2% SS + 1.45% Medicare each side, federal + state tax, FLSA
+- Indonesia (ID): BPJS Ketenagakerjaan, BPJS Kesehatan, PPh 21 income tax
+- UAE (AE): No income tax, WPS mandatory, DEWS pension for DIFC
+- Japan (JP): Social insurance ~15% each, income tax 5-45%, min wage varies by prefecture
+
+When processing payroll, ALWAYS apply the correct country-specific rules based on employee country.
+When building business apps, consider local regulations and work culture of the specified country.
+`;
+
 // ─── Fallback (no API key) ────────────────────────────────────────────────────
 
 function buildFallbackResult(
@@ -125,6 +148,8 @@ App: "${appName}"
 Description: ${appDescription}
 Entry point: ${entryPoint}
 
+${COUNTRY_RULES}
+
 Given the user's input, generate a structured execution plan as a JSON object.
 Respond ONLY with valid JSON — no markdown, no extra text.
 
@@ -138,7 +163,7 @@ JSON format:
   ]
 }
 
-Keep it to 3–5 tasks. Be specific to the app type and user input.`;
+Keep it to 3–5 tasks. Be specific to the app type and user input. Apply country-specific rules when relevant.`;
 
   const response = await chatCompletion(
     [
@@ -187,10 +212,13 @@ async function executor(
 Description: ${appDescription}
 Entry point: ${entryPoint}
 
+${COUNTRY_RULES}
+
 Execution Plan:
 ${planSummary}
 
 Your job: Execute each step of the plan against the user's input and produce a complete output report.
+Apply country-specific tax/compliance rules when processing payroll or business data.
 
 Format your response EXACTLY like this (use the dividers as shown):
 ─── STEP 1: [task name] ───
@@ -203,7 +231,7 @@ Format your response EXACTLY like this (use the dividers as shown):
 [step output]
 
 ─── FINAL OUTPUT ───
-[complete consolidated result with all computed values, formatted clearly]
+[complete consolidated result with all computed values, formatted clearly as a table]
 
 ─── SUMMARY ───
 [1–2 sentence conclusion]
@@ -376,8 +404,10 @@ export async function runOrchestratorChat(
     .join("\n");
 
   // ── Step 1: Planner ────────────────────────────────────────────────────────
-  const plannerPrompt = `You are SRP Autonomous OS Orchestrator.
-You are a deterministic planning engine.
+  const plannerPrompt = `You are Emergentic AI Orchestrator.
+You are a deterministic planning engine for multi-country, multi-industry business automation.
+
+${COUNTRY_RULES}
 
 RULES:
 - Do NOT ask clarifying questions.
@@ -385,6 +415,7 @@ RULES:
 - Do NOT expand explanations.
 - Always generate a structured execution plan.
 - Make reasonable assumptions if prompt is incomplete.
+- Apply country-specific rules when relevant.
 - Keep output concise.
 
 Available apps/agents:
@@ -432,7 +463,9 @@ Keep to 3–6 tasks.`;
     .map((t) => `  ${t.step}. ${t.task} -> expected: ${t.expected_output}`)
     .join("\n");
 
-  const executorPrompt = `You are SRP Autonomous OS Orchestrator — a deterministic execution engine.
+  const executorPrompt = `You are Emergentic AI Orchestrator — a deterministic execution engine for multi-country business automation.
+
+${COUNTRY_RULES}
 
 User request: "${userRequest}"
 

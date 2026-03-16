@@ -170,7 +170,35 @@ export const GenericApp: React.FC<GenericAppProps> = ({ app: initialApp }) => {
 
   // ── State ──────────────────────────────────────────────────────────────────
   const [app, setApp]                         = useState<RichApp>(initialApp);
-  const [inputPayload, setInputPayload]       = useState("");
+  const [inputPayload, setInputPayload]       = useState(() => {
+    // Auto-generate sample input based on app name/type
+    const name = initialApp.name.toLowerCase();
+    if (name.includes("payroll")) return JSON.stringify({
+      employees: [
+        { name: "Sarah Chen", country: "MY", base_salary: 8000, hours_worked: 176 },
+        { name: "Raj Kumar", country: "IN", base_salary: 75000, hours_worked: 160 },
+        { name: "Emma Wilson", country: "UK", base_salary: 4500, hours_worked: 168 },
+      ],
+      pay_period: "2026-03",
+      currency: "multi"
+    }, null, 2);
+    if (name.includes("invoice")) return JSON.stringify({
+      customer: "Acme Corp", items: [
+        { description: "Consulting Services", quantity: 40, rate: 150 },
+        { description: "Development Hours", quantity: 80, rate: 120 }
+      ], currency: "USD", due_days: 30
+    }, null, 2);
+    if (name.includes("crm") || name.includes("sales")) return JSON.stringify({
+      lead: { name: "John Smith", company: "TechCo", email: "john@techco.com" },
+      deal_value: 25000, stage: "proposal", next_action: "Schedule demo"
+    }, null, 2);
+    if (name.includes("recruit")) return JSON.stringify({
+      position: "Senior Software Engineer", candidates: 5,
+      requirements: ["Python", "React", "PostgreSQL", "5+ years experience"],
+      location: "Remote", salary_range: "120k-160k USD"
+    }, null, 2);
+    return JSON.stringify({ action: "process", data: initialApp.name }, null, 2);
+  });
   const [runInProgress, setRunInProgress]     = useState(false);
   const [rebuildInProgress, setRebuildInProgress] = useState(false);
   const [outputLines, setOutputLines]         = useState<{ text: string; type: string }[]>([]);

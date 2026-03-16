@@ -54,11 +54,11 @@ export const OrchestratorPage: React.FC = () => {
       setMessages([{
         id: "welcome",
         role: "assistant",
-        content: `SRP Autonomous OS Orchestrator — ready.\n\nDescribe what you want to build or automate and I will generate a structured execution plan.\n\nExamples:\n  • Build a payroll processor for 50 employees\n  • Create an invoice generation system with PDF export\n  • Design a candidate screening pipeline with scoring\n  • Create an AI-powered visa tracking system with email reminders`,
+        content: `Emergentic AI Orchestrator — ready.\n\nDescribe what you want to build or automate and I will generate a structured execution plan.\n\nSupports payroll rules for Malaysia, Singapore, India, Australia, UK, USA, Canada, Germany, Philippines, Indonesia, Sri Lanka, Nepal and more.\n\nExamples:\n  • Build a payroll processor for 50 employees\n  • Create an invoice generation system with PDF export\n  • Design a candidate screening pipeline with scoring\n  • Create an AI-powered visa tracking system with email reminders`,
         timestamp: new Date().toLocaleTimeString(),
       }]);
     }
-  }, [apps, aiReady]);
+  }, [aiReady]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -331,19 +331,15 @@ export const OrchestratorPage: React.FC = () => {
             <textarea
               className="flex-1 px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white text-sm focus:outline-none focus:border-blue-500 resize-none"
               rows={2}
-              placeholder={
-                aiReady
-                  ? "Ask the orchestrator anything... e.g. 'Process payroll for John Doe, salary 80000, 160 hours worked'"
-                  : "OpenAI key required..."
-              }
+              placeholder="Ask the orchestrator anything... e.g. 'Process payroll for John Doe, salary 80000, 160 hours worked'"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              disabled={!aiReady || loading}
+              disabled={loading}
             />
             <Button
               onClick={handleSend}
-              disabled={!aiReady || loading || !input.trim()}
+              disabled={loading || !input.trim()}
               className="px-6 self-end"
             >
               {loading ? "⏳" : "Send ↵"}

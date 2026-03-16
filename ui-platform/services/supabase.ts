@@ -12,7 +12,7 @@
  */
 
 const BACKEND_URL: string =
-  (import.meta.env.VITE_BACKEND_URL as string | undefined) ?? "http://localhost:8000";
+  (import.meta.env.VITE_API_URL as string | undefined) ?? "";
 
 const DEMO_ORG_ID: string =
   (import.meta.env.VITE_DEMO_ORG_ID as string | undefined) ??

@@ -1,6 +1,6 @@
 # Emergentic AI
 
-**Enterprise-grade autonomous operations platform** — describe your business in plain language and get a fully-wired application with AI-generated schemas, multi-tenant isolation, and automated workflows.
+**Enterprise-grade autonomous AI platform** — describe your business in plain language and get a fully-wired application with AI-generated schemas, multi-tenant isolation, country-specific compliance rules, and automated workflows.
 
 🌐 **Live: [https://autonomous.srpailabs.com](https://autonomous.srpailabs.com)**  
 📖 **API Docs: [https://autonomous.srpailabs.com/docs](https://autonomous.srpailabs.com/docs)**  
@@ -10,7 +10,7 @@
 
 ## What it does
 
-Emergentic AI lets teams describe their internal operations in plain language, and the platform AI-generates a custom database application (tables, schemas, CRUD API) tailored to their industry. Ships with pre-built workflow automation for onboarding, payroll, invoicing, recruitment, scheduling, and sales lead management — all multi-tenant, all production-ready.
+Emergentic AI lets teams describe their internal operations in plain language, and the platform AI-generates a custom business application (tables, schemas, CRUD API) tailored to their industry and country. Ships with built-in payroll & compliance rules for 14+ countries, pre-built workflow automation for onboarding, payroll, invoicing, recruitment, scheduling, and sales — all multi-tenant, all production-ready.
 
 ---
 
@@ -18,33 +18,58 @@ Emergentic AI lets teams describe their internal operations in plain language, a
 
 | Feature | Status |
 |---|---|
-| AI app generation from natural language | ✅ Live |
+| AI app generation from natural language (GPT-4o-mini) | ✅ Live |
+| Multi-country payroll & compliance (14+ countries) | ✅ Live |
 | Multi-industry templates (7 industries) | ✅ Live |
-| Multi-tenant subdomain routing | ✅ Live |
+| Multi-tenant data isolation | ✅ Live |
 | Workflow automation (6 workflows) | ✅ Live |
 | PostgreSQL persistence (apps, schemas, records) | ✅ Live |
 | Execution logging + audit trail | ✅ Live |
+| 3-step AI Orchestrator (Planner → Executor → Validator) | ✅ Live |
 | N8N webhook integration | ✅ Live |
-| Demo accounts pre-seeded | ✅ Live |
-| Gmail / WhatsApp / Calendar / HubSpot integrations | ⚙️ Configurable (stub) |
-| Firebase auth | ⚙️ Configurable (stub) |
+| Demo accounts pre-seeded (9 accounts) | ✅ Live |
+| Responsive dark-mode UI | ✅ Live |
+
+---
+
+## 🌍 Supported countries (payroll & compliance)
+
+| Flag | Country | Key rules |
+|---|---|---|
+| 🇲🇾 | Malaysia | EPF 11%/13%, SOCSO, EIS, PCB income tax |
+| 🇸🇬 | Singapore | CPF 20%/17%, SDL, SHG |
+| 🇮🇳 | India | PF 12%/12%, ESI, Professional Tax, TDS |
+| 🇵🇭 | Philippines | SSS 4.5%/8.5%, PhilHealth, Pag-IBIG, 13th month |
+| 🇦🇺 | Australia | Super 11%, PAYG, Medicare 2% |
+| 🇱🇰 | Sri Lanka | EPF 8%/12%, ETF 3%, PAYE |
+| 🇳🇵 | Nepal | CIT 10%/20%, SSF, income tax |
+| 🇨🇦 | Canada | CPP 5.95%, EI 1.66%/2.32%, federal + provincial |
+| 🇩🇪 | Germany | Social security ~20%, Lohnsteuer |
+| 🇬🇧 | UK | NI 8%/13.8%, PAYE, pension 5%/3% |
+| 🇺🇸 | USA | FICA 6.2% + 1.45%, federal + state tax |
+| 🇮🇩 | Indonesia | BPJS, PPh 21 income tax |
+| 🇦🇪 | UAE | No income tax, WPS, DEWS pension |
+| 🇯🇵 | Japan | Social insurance ~15%, income tax 5-45% |
 
 ---
 
 ## Demo accounts
 
-All demo accounts use password: **`Demo@123`**
+**Founder account**: `founder@emergentic.ai` / **`Founder@123`**
+
+All other demo accounts use password: **`Demo@123`**
 
 | Email | Role | Organization |
 |---|---|---|
-| admin@demo.com | Admin | Demo Corp (IT Company) |
-| owner@demo.com | Owner | HealthFirst Hospital |
-| hr@demo.com | Manager | EduTech Academy |
-| finance@demo.com | Manager | FinanceFlow Ltd |
-| sales@demo.com | User | SalesEdge Agency |
-| dev@demo.com | User | TechBuild Solutions |
-| recruiter@demo.com | User | RecruitPro Agency |
-| ops@demo.com | User | OpsCore Services |
+| founder@emergentic.ai | Founder | Platform Admin |
+| admin@demo.com | Admin | Emergentic AI Demo |
+| owner@demo.com | Owner | MediCare Hospital |
+| hr@demo.com | Manager | Bright Future Academy |
+| finance@demo.com | Manager | PayRight Financial |
+| sales@demo.com | User | ServicePro Solutions |
+| dev@demo.com | User | Emergentic AI Demo |
+| recruiter@demo.com | User | TalentHub Recruiting |
+| ops@demo.com | User | Emergentic AI Demo |
 
 ---
 
@@ -64,12 +89,12 @@ All demo accounts use password: **`Demo@123`**
 
 ## Tech stack
 
-- **Backend**: Python 3.11+, FastAPI, SQLAlchemy, Pydantic v2
+- **Backend**: Python 3.14, FastAPI, SQLAlchemy, Pydantic v2
 - **Database**: PostgreSQL 16 (Docker container on Hetzner)
-- **Frontend**: React 18, TypeScript, Tailwind CSS (`ui-platform/`)
-- **Hosting**: Hetzner VPS (5.223.67.236), Docker, Nginx
-- **Domain**: `autonomous.srpailabs.com` + `*.autonomous.srpailabs.com`
-- **SSL**: Let's Encrypt (auto-renewed via certbot)
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS
+- **AI**: OpenAI GPT-4o-mini (orchestrator, planner, executor)
+- **Hosting**: Hetzner VPS, Docker, Nginx, Let's Encrypt SSL
+- **Domain**: `autonomous.srpailabs.com`
 
 ---
 

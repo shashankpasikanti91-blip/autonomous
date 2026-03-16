@@ -54,7 +54,7 @@ class AppService {
     offset = 0
   ): Promise<PaginatedResponse<App>> {
     try {
-      const backendUrl = (import.meta.env.VITE_BACKEND_URL as string | undefined) ?? "http://localhost:8000";
+      const backendUrl = (import.meta.env.VITE_API_URL as string | undefined) ?? "";
       const res = await fetch(`${backendUrl}/api/records/apps?org_id=${DEMO_ORG_ID}`);
       if (res.ok) {
         const json = await res.json();
@@ -180,7 +180,7 @@ class AppService {
   }
 
   async rollbackToVersion(appId: string, _versionId: string): Promise<App> {
-    return this._demoApp(appId);
+    return this._makeDemoApp(appId);
   }
 }
 
