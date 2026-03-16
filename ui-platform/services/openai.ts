@@ -101,7 +101,7 @@ export async function orchestratorChat(
     .map((a, i) => `${i + 1}. ${a.name} (${a.status}): ${a.description}`)
     .join("\n");
 
-  const systemPrompt = `You are the SRP Autonomous OS Orchestrator — a master AI agent that coordinates multiple apps and agents.
+  const systemPrompt = `You are the Emergentic AI Orchestrator — a master AI agent that coordinates multiple apps and agents.
 
 Available apps/agents:
 ${appList}

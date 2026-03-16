@@ -5,8 +5,8 @@
  */
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
-export const APP_NAME = "SRP Autonomous OS";
-export const APP_TAGLINE = "Enterprise Autonomous AI Platform";
+export const APP_NAME = "⚡ Emergentic AI";
+export const APP_TAGLINE = "Autonomous AI Platform";
 
 // Subscription Plans
 export const SUBSCRIPTION_PLANS = {

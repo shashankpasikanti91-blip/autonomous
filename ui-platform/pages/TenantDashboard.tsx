@@ -313,9 +313,9 @@ export const TenantDashboard: React.FC = () => {
             icon="📋"
           />
           <Stat
-            label="Total Cost (Month)"
-            value={formatCurrency(costs?.total || 0)}
-            icon="💰"
+            label="Platform Status"
+            value={platformHealth ? "✅ Healthy" : "—"}
+            icon="🟢"
           />
           {platformHealth && (
             <Stat

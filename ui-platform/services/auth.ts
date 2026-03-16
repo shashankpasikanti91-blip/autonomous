@@ -132,13 +132,13 @@ class AuthService {
       }
     } catch { /* fall through */ }
 
-    // Demo fallback – treat any stored token as valid
+    // Demo fallback – restore saved user info or use safe defaults
     return {
       user_id: "user_demo",
       tenant_id: this.getTenantId() || "demo-tenant",
-      email: "demo@example.com",
-      name: "Demo User",
-      role: "owner",
+      email: localStorage.getItem("srp_user_email") || "demo@example.com",
+      name: localStorage.getItem("srp_user_name") || "Demo User",
+      role: (localStorage.getItem("srp_user_role") as any) || "owner",
       created_at: new Date().toISOString(),
       disabled: false,
       mfa_enabled: false,
@@ -164,6 +164,11 @@ class AuthService {
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.tenantIdKey);
+    localStorage.removeItem("srp_user_name");
+    localStorage.removeItem("srp_user_role");
+    localStorage.removeItem("srp_user_email");
+    localStorage.removeItem("srp_org_name");
+    window.location.href = "/login";
   }
 
   getToken(): string | null {
