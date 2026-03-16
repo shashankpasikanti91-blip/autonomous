@@ -1,0 +1,38 @@
+fastapi==0.109.0
+uvicorn==0.27.0
+pydantic==2.5.0
+pydantic-ai==0.0.12
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+firebase-admin==6.4.0
+numpy==1.24.3
+pandas==2.0.3
+httpx==0.25.1
+aiohttp==3.9.1
+python-multipart==0.0.6
+tenacity==8.2.3
+
+# ── PostgreSQL (primary database) ──────────────────────────────────────────
+sqlalchemy==2.0.46
+psycopg2-binary==2.9.9
+
+# OAuth and authentication
+google-auth==2.26.2
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+
+# Google APIs (Gmail, Calendar, Drive)
+google-api-python-client==2.105.0
+
+# Email support
+secure-smtplib==0.1.1
+
+# PDF generation
+reportlab==4.0.9
+weasyprint==60.0
+
+# Async utilities
+aiofiles==23.2.1
+
+# Job scheduling
+APScheduler==3.10.4

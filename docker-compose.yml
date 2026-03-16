@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Main API Application
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - ENV=production
+      - LOG_LEVEL=INFO
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      # Add Firebase and other credentials via .env file
+    volumes:
+      - ./app:/app/app
+      - ./examples:/app/examples
+    depends_on:
+      - redis
+    networks:
+      - hr-network
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - hr-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # N8N (optional - for workflow execution)
+  # n8n:
+  #   image: n8nio/n8n:latest
+  #   ports:
+  #     - "5678:5678"
+  #   environment:
+  #     - N8N_BASIC_AUTH_ACTIVE=false
+  #     - N8N_PROTOCOL=http
+  #     - N8N_HOST=0.0.0.0
+  #   volumes:
+  #     - n8n_data:/home/node/.n8n
+  #   networks:
+  #     - hr-network
+
+networks:
+  hr-network:
+    driver: bridge
+
+# volumes:
+#   n8n_data:
