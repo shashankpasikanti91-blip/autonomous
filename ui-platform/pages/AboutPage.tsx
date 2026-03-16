@@ -42,14 +42,12 @@ export const AboutPage: React.FC = () => {
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-4">
             About{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              SRP Autonomous OS
+            <span className="bg-gradient-to-r from-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+              Emergentic AI
             </span>
           </h1>
           <p className="text-sm text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            A platform that generates structured internal business applications — payroll
-            management, CRM, invoicing, and operations systems — through AI-assisted templates.
-            Describe your requirement and receive a fully structured, operable application in seconds.
+            Emergentic AI is an intelligent operating system for modern businesses — generating structured applications for payroll, CRM, invoicing, and operations through AI-assisted templates. Describe your requirement and receive a fully operational application in seconds.
           </p>
         </section>
 
@@ -68,6 +66,35 @@ export const AboutPage: React.FC = () => {
                 <p className="text-xs text-gray-600 leading-relaxed">{f.body}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* CTA strip */}
+        <section className="border-t border-gray-200">
+          <div className="max-w-4xl mx-auto px-5 py-8 text-center">
+            <p className="text-xs font-semibold text-gray-900 mb-2">Our Mission</p>
+            <p className="text-sm text-gray-600 max-w-2xl mx-auto">
+              We believe every business should have access to enterprise-grade software. Emergentic AI removes the complexity of building and maintaining business systems, so teams can focus on growth — not infrastructure.
+            </p>
+          </div>
+        </section>
+
+        {/* Team */}
+        <section className="bg-gray-50 border-t border-gray-200">
+          <div className="max-w-4xl mx-auto px-5 py-12 text-center">
+            <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest mb-6">Built by</p>
+            <div className="flex flex-wrap justify-center gap-6">
+              {[
+                { name: "AI Research Team", role: "Platform Intelligence" },
+                { name: "Engineering Team", role: "Infrastructure & APIs" },
+                { name: "Product Team", role: "UX & Business Templates" },
+              ].map((m) => (
+                <div key={m.name} className="rounded-xl border border-gray-200 bg-white px-6 py-4 min-w-[160px]">
+                  <p className="text-sm font-semibold text-gray-900">{m.name}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{m.role}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

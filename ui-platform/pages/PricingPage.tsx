@@ -12,48 +12,50 @@ export const PricingPage: React.FC = () => {
   const plans = [
     {
       name: "Starter",
-      tagline: "Custom internal systems",
-      monthlyPrice: 49,
+      tagline: "For individuals & prototypes",
+      monthlyPrice: 0,
+      priceLabel: "Free",
       features: [
-        "AI template generation",
+        "3 AI-generated apps",
         "Core business modules",
         "Single deployment environment",
         "Basic run history and logs",
-        "Email support",
+        "Community support",
       ],
-      cta: "Get Started",
-      ctaHref: "mailto:hello@srpailabs.com?subject=Starter Plan",
+      cta: "Get Started Free",
+      ctaHref: "/login",
     },
     {
-      name: "Business",
-      tagline: "Extended modules and customization",
-      monthlyPrice: 149,
+      name: "Professional",
+      tagline: "For growing teams",
+      monthlyPrice: 49,
       features: [
-        "Everything in Starter",
+        "Unlimited AI apps",
         "Payroll, CRM, and Invoicing templates",
-        "Extended module configuration",
+        "7 industry templates",
         "Custom fields and workflows",
-        "Multi-industry support (7 industries)",
+        "Multi-tenant isolation",
         "Priority support",
       ],
-      cta: "Get Started",
-      ctaHref: "mailto:hello@srpailabs.com?subject=Business Plan",
+      cta: "Start Free Trial",
+      ctaHref: "/login",
       highlighted: true,
     },
     {
       name: "Enterprise",
-      tagline: "Dedicated deployment and integrations",
-      monthlyPrice: 399,
+      tagline: "For large organisations",
+      monthlyPrice: 0,
+      priceLabel: "Custom",
       features: [
-        "Everything in Business",
+        "Everything in Professional",
         "Dedicated deployment environment",
         "Third-party system integrations",
         "Custom compliance rules",
         "Dedicated onboarding and SLA",
-        "Custom subdomain (*.autonomous.srpailabs.com)",
+        "Custom domain (*.autonomous.srpailabs.com)",
       ],
       cta: "Contact Sales",
-      ctaHref: "mailto:hello@srpailabs.com?subject=Enterprise Plan",
+      ctaHref: "mailto:hello@emergentic.ai?subject=Enterprise Plan",
     },
   ];
 
@@ -100,9 +102,6 @@ export const PricingPage: React.FC = () => {
         <section className="max-w-4xl mx-auto px-5 pb-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {plans.map((plan) => {
-              const displayPrice = annual
-                ? Math.round(plan.monthlyPrice * 0.8)
-                : plan.monthlyPrice;
               return (
               <div
                 key={plan.name}
@@ -130,12 +129,20 @@ export const PricingPage: React.FC = () => {
                 {/* Price */}
                 <div className="mb-5">
                   <div className="flex items-end gap-1">
-                    <span className="text-3xl font-extrabold text-gray-900">${displayPrice}</span>
-                    <span className="text-xs text-gray-500 mb-1">/mo</span>
+                    {(plan as any).priceLabel ? (
+                      <span className="text-3xl font-extrabold text-gray-900">{(plan as any).priceLabel}</span>
+                    ) : (
+                      <>
+                        <span className="text-3xl font-extrabold text-gray-900">
+                          ${annual ? Math.round(plan.monthlyPrice * 0.8) : plan.monthlyPrice}
+                        </span>
+                        <span className="text-xs text-gray-500 mb-1">/mo</span>
+                      </>
+                    )}
                   </div>
-                  {annual && (
+                  {annual && plan.monthlyPrice > 0 && (
                     <p className="text-[10px] text-green-600 font-medium mt-0.5">
-                      Billed annually — save ${Math.round((plan.monthlyPrice - displayPrice) * 12)}/yr
+                      Billed annually — save ${Math.round(plan.monthlyPrice * 0.2 * 12)}/yr
                     </p>
                   )}
                 </div>

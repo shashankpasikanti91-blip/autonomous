@@ -20,6 +20,7 @@ from db.models import CoreUser, Organization, App, AppSchema, AppRecord, Country
 
 # Fixed UUIDs for demo data
 DEMO_USERS = [
+    {"id": "00000000-0000-0000-0000-000000000000", "email": "founder@emergentic.ai", "role": "founder"},
     {"id": "00000000-0000-0000-0000-000000000001", "email": "admin@demo.com", "role": "admin"},
     {"id": "00000000-0000-0000-0000-000000000002", "email": "owner@demo.com", "role": "owner"},
     {"id": "00000000-0000-0000-0000-000000000003", "email": "hr@demo.com", "role": "manager"},
@@ -209,15 +210,16 @@ def seed():
         print("\n" + "=" * 60)
         print("  ✓ DEMO DATA SEEDED SUCCESSFULLY")
         print("=" * 60)
-        print("\nDemo login credentials:")
-        print("  admin@demo.com  (admin)")
-        print("  owner@demo.com  (owner)")
-        print("  hr@demo.com     (manager)")
-        print("  finance@demo.com (manager)")
-        print("  sales@demo.com  (user)")
-        print("  dev@demo.com    (user)")
-        print("  recruiter@demo.com (user)")
-        print("  ops@demo.com    (user)")
+        print("\nDemo login credentials (password: Demo@123):")
+        print("  founder@emergentic.ai  (founder)  pw: Founder@123")
+        print("  admin@demo.com         (admin)")
+        print("  owner@demo.com         (owner)")
+        print("  hr@demo.com            (manager)")
+        print("  finance@demo.com       (manager)")
+        print("  sales@demo.com         (user)")
+        print("  dev@demo.com           (user)")
+        print("  recruiter@demo.com     (user)")
+        print("  ops@demo.com           (user)")
         print(f"\nDemo organizations: {len(DEMO_ORGS)}")
         print(f"Demo apps: {len(DEMO_APPS)}")
         print(f"Demo data records: {len(DEMO_RECORDS)}")

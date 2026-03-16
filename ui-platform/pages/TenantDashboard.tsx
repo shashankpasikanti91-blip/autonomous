@@ -45,9 +45,36 @@ export const TenantDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Apps from API
+  const [apps, setApps] = useState<Array<{ id: string; name: string; app_type: string; description: string; created_at?: string; status?: string }>>([]);
+  const [appsLoading, setAppsLoading] = useState(true);
+  const [showAppModal, setShowAppModal] = useState(false);
+
   // AI App creation prompt
   const [appPrompt, setAppPrompt] = useState("");
   const [promptError, setPromptError] = useState("");
+
+  // Fetch apps from API
+  useEffect(() => {
+    const fetchApps = async () => {
+      setAppsLoading(true);
+      try {
+        const apiBase = (import.meta as any).env?.VITE_API_URL || "";
+        const res = await fetch(`${apiBase}/api/records/apps`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("srp_auth_token") || ""}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setApps(Array.isArray(data) ? data : (data.apps || data.items || []));
+        }
+      } catch {
+        // silently ignore — apps list stays empty
+      } finally {
+        setAppsLoading(false);
+      }
+    };
+    fetchApps();
+  }, []);
 
   const handleLaunchOrchestrator = () => {
     if (!appPrompt.trim()) {
@@ -198,6 +225,80 @@ export const TenantDashboard: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* ─── APPS GRID ─────────────────────────────────────────────────────── */}
+        <div className="rounded-xl border border-white/10 bg-gray-800/60 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🗂️</span>
+              <h2 className="text-base font-semibold text-white">Your Apps</h2>
+            </div>
+            <button
+              onClick={() => setShowAppModal(true)}
+              className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium transition-colors"
+            >
+              + Create New App
+            </button>
+          </div>
+
+          {appsLoading ? (
+            <p className="text-xs text-gray-500">Loading apps…</p>
+          ) : apps.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">
+              <p className="text-sm">No apps yet.</p>
+              <p className="text-xs mt-1">Use the Orchestrator to build your first AI app.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {apps.map((a) => (
+                <button
+                  key={a.id}
+                  onClick={() => navigate(`/apps/${a.id}`)}
+                  className="text-left rounded-lg border border-white/10 bg-gray-900/50 hover:bg-gray-900/80 p-4 transition-colors"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-blue-400 uppercase tracking-wide">{a.app_type}</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${a.status === "active" ? "bg-green-500/20 text-green-400" : "bg-gray-500/20 text-gray-400"}`}>
+                      {a.status || "active"}
+                    </span>
+                  </div>
+                  <p className="text-sm font-semibold text-white mb-1">{a.name}</p>
+                  <p className="text-xs text-gray-500 line-clamp-2">{a.description}</p>
+                  {a.created_at && (
+                    <p className="text-[10px] text-gray-600 mt-2">{new Date(a.created_at).toLocaleDateString()}</p>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Create App Modal */}
+        {showAppModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={() => setShowAppModal(false)}>
+            <div className="bg-gray-900 border border-white/10 rounded-xl p-6 w-full max-w-md mx-4" onClick={(e) => e.stopPropagation()}>
+              <h3 className="text-base font-semibold text-white mb-3">Create New App</h3>
+              <textarea
+                rows={3}
+                className="w-full px-4 py-3 bg-gray-800 border border-blue-500/30 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
+                placeholder="Describe your app, e.g. 'A payroll system for 50 employees with tax deductions'"
+                value={appPrompt}
+                onChange={(e) => setAppPrompt(e.target.value)}
+              />
+              <div className="flex justify-end gap-3 mt-4">
+                <button onClick={() => setShowAppModal(false)} className="px-4 py-2 rounded-lg border border-white/10 text-white text-xs hover:bg-white/10 transition">
+                  Cancel
+                </button>
+                <button
+                  onClick={() => { setShowAppModal(false); handleLaunchOrchestrator(); }}
+                  className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition"
+                >
+                  Build App →
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

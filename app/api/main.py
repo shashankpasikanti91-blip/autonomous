@@ -634,13 +634,44 @@ async def process_with_agent(
 
 @app.post("/auth/login", tags=["Authentication"])
 async def login(email: str, password: str) -> Dict[str, Any]:
-    """Authenticate user and get token."""
+    """Authenticate user and get token. Falls back to demo account check."""
+    import uuid as _uuid
+
+    # Demo accounts — password Demo@123, founder uses Founder@123
+    _DEMO_ACCOUNTS = {
+        "founder@emergentic.ai": {"password": "Founder@123", "role": "founder", "name": "Founder"},
+        "admin@demo.com":        {"password": "Demo@123",    "role": "admin",   "name": "Admin"},
+        "owner@demo.com":        {"password": "Demo@123",    "role": "owner",   "name": "Owner"},
+        "hr@demo.com":           {"password": "Demo@123",    "role": "manager", "name": "HR Manager"},
+        "finance@demo.com":      {"password": "Demo@123",    "role": "manager", "name": "Finance"},
+        "sales@demo.com":        {"password": "Demo@123",    "role": "user",    "name": "Sales"},
+        "dev@demo.com":          {"password": "Demo@123",    "role": "user",    "name": "Developer"},
+        "recruiter@demo.com":    {"password": "Demo@123",    "role": "user",    "name": "Recruiter"},
+        "ops@demo.com":          {"password": "Demo@123",    "role": "user",    "name": "Operations"},
+    }
+
+    # Check demo accounts first
+    acct = _DEMO_ACCOUNTS.get(email.lower())
+    if acct and acct["password"] == password:
+        demo_token = "demo_" + str(_uuid.uuid4()).replace("-", "")
+        return {
+            "token": demo_token,
+            "token_type": "Bearer",
+            "user_email": email,
+            "user_name": acct["name"],
+            "role": acct["role"],
+            "user_id": str(_uuid.uuid5(_uuid.NAMESPACE_URL, email)),
+            "tenant_id": "demo-tenant",
+            "organization_name": "Emergentic AI Demo",
+        }
+
+    # Try real Firebase auth
     try:
         token = await auth_manager.authenticate_user(email, password)
         return {"token": token, "user_email": email}
     except Exception as e:
         logger.error(f"Login failed: {str(e)}")
-        raise HTTPException(status_code=401, detail="Authentication failed")
+        raise HTTPException(status_code=401, detail="Invalid email or password")
 
 
 @app.get("/auth/verify", tags=["Authentication"])

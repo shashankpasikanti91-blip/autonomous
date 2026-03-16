@@ -47,7 +47,7 @@ export const Footer: React.FC = () => {
         title={expanded ? "Collapse footer" : "Expand footer"}
       >
         <p className="text-[11px] text-gray-400">
-          © {year} SRP Autonomous OS. All rights reserved. &nbsp;·&nbsp; Powered by AI-driven templates
+          © {year} Emergentic AI. All rights reserved. &nbsp;·&nbsp; Powered by AI-driven automation
         </p>
         <button
           className="ml-4 flex items-center gap-1 text-[11px] text-gray-400 hover:text-gray-700 transition-colors whitespace-nowrap"
@@ -64,14 +64,12 @@ export const Footer: React.FC = () => {
             {/* Brand */}
             <div className="max-w-[220px]">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-[10px] shrink-0">
-                  S
-                </div>
-                <span className="text-sm font-semibold text-gray-900">SRP Autonomous OS</span>
-              </div>
-              <p className="text-[11px] text-gray-500 leading-relaxed">
-                Build structured internal business systems through AI-driven templates.
-              </p>
+              <span className="text-base leading-none">⚡</span>
+              <span className="text-sm font-bold text-gray-900">Emergentic AI</span>
+            </div>
+            <p className="text-[11px] text-gray-500 leading-relaxed">
+              Build intelligent business systems through AI-driven automation.
+            </p>
             </div>
 
             {/* Columns */}

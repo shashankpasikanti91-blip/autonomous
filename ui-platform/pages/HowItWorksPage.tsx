@@ -17,7 +17,7 @@ export const HowItWorksPage: React.FC = () => {
     {
       number: "02",
       title: "System Generates Structured Application",
-      body: "SRP Autonomous OS analyses your requirement, selects the matching business template, and scaffolds a fully structured application — complete with database tables, modules, sidebar navigation, and summary cards.",
+      body: "Emergentic AI analyses your requirement, selects the matching business template, and scaffolds a fully structured application — complete with database tables, modules, sidebar navigation, and summary cards.",
       tag: "AI-Powered Generation",
     },
     {
@@ -47,7 +47,7 @@ export const HowItWorksPage: React.FC = () => {
           </h1>
           <p className="text-sm text-gray-600 leading-relaxed max-w-xl mx-auto">
             No development team, no lengthy specification. Just describe what your business
-            needs — and SRP Autonomous OS handles the rest.
+            needs — and Emergentic AI handles the rest.
           </p>
         </section>
 

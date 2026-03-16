@@ -68,22 +68,28 @@ class AuthService {
         const data = await response.json();
         const accessToken = typeof data.token === "string" ? data.token : "demo_" + Date.now();
         this.setToken(accessToken);
-        this.setTenantId("demo-tenant");
+        const tenantId = data.tenant_id || "demo-tenant";
+        this.setTenantId(tenantId);
+        // Store user info for display
+        localStorage.setItem("srp_user_name", data.user_name || data.user_email || credentials.email);
+        localStorage.setItem("srp_user_role", data.role || "user");
+        localStorage.setItem("srp_user_email", data.user_email || credentials.email);
+        localStorage.setItem("srp_org_name", data.organization_name || "Emergentic AI Demo");
         return {
           token: { access_token: accessToken, token_type: "Bearer", expires_in: 3600, refresh_token: accessToken },
           user: {
-            user_id: "user_1",
-            tenant_id: "demo-tenant",
+            user_id: data.user_id || "user_1",
+            tenant_id: tenantId,
             email: data.user_email || credentials.email,
-            name: (data.user_email || credentials.email).split("@")[0],
-            role: "owner",
+            name: data.user_name || (data.user_email || credentials.email).split("@")[0],
+            role: data.role || "owner",
             created_at: new Date().toISOString(),
             disabled: false,
             mfa_enabled: false,
           },
           tenant: {
-            tenant_id: "demo-tenant",
-            organization_name: "Demo Organization",
+            tenant_id: tenantId,
+            organization_name: data.organization_name || "Emergentic AI Demo",
             status: "active",
             subscription_plan: "starter",
             owner_email: credentials.email,
@@ -91,8 +97,13 @@ class AuthService {
             quota: { quota_id: "quota_1", max_apps: 10, max_workflows_per_app: 20, max_api_calls_per_month: 100000, max_storage_gb: 10, max_concurrent_connections: 10, max_users: 10 },
           },
         };
+      } else if (response.status === 401) {
+        throw new Error("Invalid email or password");
       }
-    } catch { /* fall through to demo mode */ }
+    } catch (err) {
+      if (err instanceof Error && err.message === "Invalid email or password") throw err;
+      /* fall through to demo mode on network error */
+    }
 
     // Demo fallback – any email/password works in dev mode
     return this._buildDemoSession(credentials.email);

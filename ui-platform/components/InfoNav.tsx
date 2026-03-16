@@ -22,14 +22,12 @@ export const InfoNav: React.FC = () => {
       <div className="max-w-5xl mx-auto px-5 h-14 flex items-center justify-between">
         {/* Brand */}
         <button
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/")}
           className="flex items-center gap-2.5 group"
         >
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-xs shrink-0">
-            S
-          </div>
-          <span className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors leading-none">
-            SRP Autonomous OS
+          <span className="text-lg leading-none">⚡</span>
+          <span className="text-sm font-bold text-gray-900 group-hover:text-cyan-600 transition-colors leading-none">
+            Emergentic AI
           </span>
         </button>
 
