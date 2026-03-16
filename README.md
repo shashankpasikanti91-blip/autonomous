@@ -1,14 +1,16 @@
-﻿# HR Autonomous OS
+# Emergentic AI
 
-**Multi-tenant HR and operations platform** — powered by FastAPI, PostgreSQL, and AI-assisted app generation.
+**Enterprise-grade autonomous operations platform** — describe your business in plain language and get a fully-wired application with AI-generated schemas, multi-tenant isolation, and automated workflows.
 
-Live: _configure with your own HR domain (e.g., hr.example.com); not linked to hospital project._
+🌐 **Live: [https://autonomous.srpailabs.com](https://autonomous.srpailabs.com)**  
+📖 **API Docs: [https://autonomous.srpailabs.com/docs](https://autonomous.srpailabs.com/docs)**  
+💚 **Health: [https://autonomous.srpailabs.com/health](https://autonomous.srpailabs.com/health)**
 
 ---
 
 ## What it does
 
-SRP Autonomous OS lets teams describe their internal operations in plain language, and the platform AI-generates a custom database application (tables, schemas, CRUD API) tailored to their industry. It ships pre-built workflow automation for onboarding, payroll, invoicing, recruitment, scheduling, and sales lead management.
+Emergentic AI lets teams describe their internal operations in plain language, and the platform AI-generates a custom database application (tables, schemas, CRUD API) tailored to their industry. Ships with pre-built workflow automation for onboarding, payroll, invoicing, recruitment, scheduling, and sales lead management — all multi-tenant, all production-ready.
 
 ---
 
@@ -21,9 +23,28 @@ SRP Autonomous OS lets teams describe their internal operations in plain languag
 | Multi-tenant subdomain routing | ✅ Live |
 | Workflow automation (6 workflows) | ✅ Live |
 | PostgreSQL persistence (apps, schemas, records) | ✅ Live |
-| Execution logging | ✅ Live |
-| Gmail / WhatsApp / Calendar / HubSpot integrations | ⚙️ Stub (configurable) |
-| Firebase auth | ⚙️ Stub (configurable) |
+| Execution logging + audit trail | ✅ Live |
+| N8N webhook integration | ✅ Live |
+| Demo accounts pre-seeded | ✅ Live |
+| Gmail / WhatsApp / Calendar / HubSpot integrations | ⚙️ Configurable (stub) |
+| Firebase auth | ⚙️ Configurable (stub) |
+
+---
+
+## Demo accounts
+
+All demo accounts use password: **`Demo@123`**
+
+| Email | Role | Organization |
+|---|---|---|
+| admin@demo.com | Admin | Demo Corp (IT Company) |
+| owner@demo.com | Owner | HealthFirst Hospital |
+| hr@demo.com | Manager | EduTech Academy |
+| finance@demo.com | Manager | FinanceFlow Ltd |
+| sales@demo.com | User | SalesEdge Agency |
+| dev@demo.com | User | TechBuild Solutions |
+| recruiter@demo.com | User | RecruitPro Agency |
+| ops@demo.com | User | OpsCore Services |
 
 ---
 
@@ -44,10 +65,11 @@ SRP Autonomous OS lets teams describe their internal operations in plain languag
 ## Tech stack
 
 - **Backend**: Python 3.11+, FastAPI, SQLAlchemy, Pydantic v2
-- **Database**: PostgreSQL (local + server). Default DB name: `hr_multitenant`.
+- **Database**: PostgreSQL 16 (Docker container on Hetzner)
 - **Frontend**: React 18, TypeScript, Tailwind CSS (`ui-platform/`)
-- **Hosting**: VPS behind reverse proxy; bring your own domain (e.g., `hr.example.com`, `*.hr.example.com`)
-- **Domain**: Configure per-environment; defaults now point to `hr.local` to avoid cross-project collisions.
+- **Hosting**: Hetzner VPS (5.223.67.236), Docker, Nginx
+- **Domain**: `autonomous.srpailabs.com` + `*.autonomous.srpailabs.com`
+- **SSL**: Let's Encrypt (auto-renewed via certbot)
 
 ---
 
