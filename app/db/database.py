@@ -88,6 +88,6 @@ def init_db() -> None:
     Create all tables defined on Base.metadata (if they don't exist yet).
     Call this once from the FastAPI lifespan / startup event.
     """
-    from app.db import models as _models  # noqa: F401 — ensures models are registered
+    from db import models as _models  # noqa: F401 — ensures models are registered
     Base.metadata.create_all(bind=engine)
     logger.info("Database tables verified / created.")

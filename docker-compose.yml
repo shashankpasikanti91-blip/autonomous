@@ -1,6 +1,26 @@
 version: '3.8'
 
 services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: srp_os
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-initdb.d
+    networks:
+      - hr-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   # Main API Application
   api:
     build: .
@@ -11,12 +31,15 @@ services:
       - LOG_LEVEL=INFO
       - API_HOST=0.0.0.0
       - API_PORT=8000
-      # Add Firebase and other credentials via .env file
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/srp_os
+    env_file:
+      - .env
     volumes:
       - ./app:/app/app
       - ./examples:/app/examples
     depends_on:
-      - redis
+      postgres:
+        condition: service_healthy
     networks:
       - hr-network
 
@@ -33,23 +56,9 @@ services:
       timeout: 3s
       retries: 5
 
-  # N8N (optional - for workflow execution)
-  # n8n:
-  #   image: n8nio/n8n:latest
-  #   ports:
-  #     - "5678:5678"
-  #   environment:
-  #     - N8N_BASIC_AUTH_ACTIVE=false
-  #     - N8N_PROTOCOL=http
-  #     - N8N_HOST=0.0.0.0
-  #   volumes:
-  #     - n8n_data:/home/node/.n8n
-  #   networks:
-  #     - hr-network
-
 networks:
   hr-network:
     driver: bridge
 
-# volumes:
-#   n8n_data:
+volumes:
+  postgres_data:

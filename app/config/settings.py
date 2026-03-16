@@ -226,4 +226,7 @@ class Settings(BaseSettings):
 # Global settings instance
 settings = Settings()
 
-get_logger_instance().info(f"Settings initialized for environment: {settings.env}")
+try:
+    get_logger_instance().info(f"Settings initialized for environment: {settings.env}")
+except Exception:
+    pass  # Logger may not be ready during early import

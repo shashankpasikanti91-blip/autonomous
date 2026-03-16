@@ -255,7 +255,7 @@ logger.info(f"[OK] API initialized with {len(WORKFLOW_ROUTERS) + 3} router group
 
 # ── Initialise DB tables (idempotent — safe to run every startup) ─────────
 try:
-    from app.db.database import init_db
+    from db.database import init_db
     init_db()
     logger.info("[OK] PostgreSQL tables verified.")
 except Exception as _db_err:

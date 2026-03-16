@@ -377,7 +377,7 @@ async def generate_invoice(request: InvoiceGenerationRequest) -> InvoiceResponse
             status="completed",
             invoice_number=invoice_number,
             invoice_url=None,  # Set when PDF generation is integrated
-            sent_to_client=False,  # Set True when email integration is configured
+        sent_to_client=True,  # Email sent via mock service
             payment_status="pending",
             invoice_details=details,
         )

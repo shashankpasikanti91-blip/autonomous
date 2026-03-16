@@ -6,7 +6,16 @@ import os
 import pytest
 
 # Add app directory to path so tests can import app modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "app"))
+_root = os.path.join(os.path.dirname(__file__), "..")
+_app = os.path.join(_root, "app")
+for p in (_root, _app):
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
+# Set test environment
+os.environ.setdefault("ENV", "development")
+os.environ.setdefault("DEBUG", "true")
+os.environ.setdefault("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/srp_os")
 
 from fastapi.testclient import TestClient
 
